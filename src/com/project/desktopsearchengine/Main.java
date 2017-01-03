@@ -1,7 +1,6 @@
 package com.project.desktopsearchengine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.project.desktopsearchengine.utilities.Utilities;
 

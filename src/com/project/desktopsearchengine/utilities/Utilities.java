@@ -36,7 +36,6 @@ public class Utilities {
 			Utilities.allowedExtensions = Arrays.asList(prop.getProperty("EXTENSIONS").split(","));
 			Utilities.parentFolders = Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(","));
 
-
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -62,7 +61,7 @@ public class Utilities {
 			if ( (listOfFiles[i].isFile()) && (Utilities.allowedExtensions.contains(getExtension(listOfFiles[i].getName())) )) {
 				fileNamesSelected.add(listOfFiles[i].getAbsolutePath());
 			} else if (listOfFiles[i].isDirectory()) {
-				getAllFilesWithExtensions(listOfFiles[i].getAbsolutePath());
+				getAllFilesWithExtensions(listOfFiles[i].getAbsolutePath()); //calling same method recursively in case of sub directory
 			}
 		}
 		return fileNamesSelected;
