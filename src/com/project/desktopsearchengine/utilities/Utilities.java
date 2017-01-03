@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,6 +18,7 @@ public class Utilities {
 	public static ArrayList<String> fileNamesSelected = new ArrayList<String>();
 	public static List<String> allowedExtensions = new ArrayList<String>();
 	public static List<String> parentFolders = new ArrayList<String>();
+	public static HashSet <String> stopWords = new HashSet <String>();
 
 	//-------------------------------------------------------------------------------------------
 	
@@ -35,6 +37,7 @@ public class Utilities {
 			// get the property value and print it out
 			Utilities.allowedExtensions = Arrays.asList(prop.getProperty("EXTENSIONS").split(","));
 			Utilities.parentFolders = Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(","));
+			Utilities.stopWords = new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(",")));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
