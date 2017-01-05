@@ -35,10 +35,12 @@ public class Utilities {
 			prop.load(input);
 
 			// get the property value and print it out
-			Utilities.allowedExtensions = Arrays.asList(prop.getProperty("EXTENSIONS").split(","));
-			Utilities.parentFolders = Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(","));
-			Utilities.stopWords = new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(",")));
-
+			Utilities.allowedExtensions = prop.getProperty("EXTENSIONS") != null ? Arrays.asList(prop.getProperty("EXTENSIONS").split(",")) : null;
+//			Utilities.allowedExtensions = Arrays.asList(prop.getProperty("EXTENSIONS").split(","));
+//			Utilities.parentFolders = Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(","));
+			Utilities.parentFolders = prop.getProperty("PARENT_FOLDERS") != null ? Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(",")) : null;
+//			Utilities.stopWords = new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(",")));
+			Utilities.stopWords = prop.getProperty("STOPWORDS") != null ? new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(","))) : null;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -61,7 +63,7 @@ public class Utilities {
 		File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
-			if ( (listOfFiles[i].isFile()) && (Utilities.allowedExtensions.contains(getExtension(listOfFiles[i].getName())) )) {
+			if ( (listOfFiles[i].isFile()) && (Utilities.allowedExtensions != null && Utilities.allowedExtensions.contains(getExtension(listOfFiles[i].getName())) )) {
 				fileNamesSelected.add(listOfFiles[i].getAbsolutePath());
 			} else if (listOfFiles[i].isDirectory()) {
 				getAllFilesWithExtensions(listOfFiles[i].getAbsolutePath()); //calling same method recursively in case of sub directory
