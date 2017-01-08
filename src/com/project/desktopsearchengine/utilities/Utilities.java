@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
+import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
+
 /*
  * Class to handle all utilities
  */
@@ -22,7 +24,7 @@ public class Utilities {
 
 	//-------------------------------------------------------------------------------------------
 	
-	public static void initializeConfigurations(String configPropertiesFile){
+	public static void initializeConfigurations(String configPropertiesFile) throws InvalidPropertyException{
 		
 		Properties prop = new Properties();
 		InputStream input = null;
@@ -33,14 +35,13 @@ public class Utilities {
 
 			// load a properties file
 			prop.load(input);
-
-			// get the property value and print it out
 			Utilities.allowedExtensions = prop.getProperty("EXTENSIONS") != null ? Arrays.asList(prop.getProperty("EXTENSIONS").split(",")) : null;
-//			Utilities.allowedExtensions = Arrays.asList(prop.getProperty("EXTENSIONS").split(","));
-//			Utilities.parentFolders = Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(","));
 			Utilities.parentFolders = prop.getProperty("PARENT_FOLDERS") != null ? Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(",")) : null;
-//			Utilities.stopWords = new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(",")));
 			Utilities.stopWords = prop.getProperty("STOPWORDS") != null ? new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(","))) : null;
+			
+			if(Utilities.allowedExtensions == null)
+				throw new InvalidPropertyException();
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

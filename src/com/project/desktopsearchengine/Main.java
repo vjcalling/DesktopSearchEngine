@@ -2,13 +2,18 @@ package com.project.desktopsearchengine;
 
 import java.util.ArrayList;
 
+import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
 import com.project.desktopsearchengine.utilities.Utilities;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		Utilities.initializeConfigurations(".\\config\\config.properties");
+		try {
+			Utilities.initializeConfigurations(".\\config\\config.properties");
+		} catch (InvalidPropertyException e) {
+			e.printStackTrace();
+		}
 		System.out.println(Utilities.stopWords);
 		
 		if(Utilities.parentFolders != null){
