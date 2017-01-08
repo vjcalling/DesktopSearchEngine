@@ -40,7 +40,7 @@ public class Utilities {
 			Utilities.stopWords = prop.getProperty("STOPWORDS") != null ? new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(","))) : null;
 			
 			if(Utilities.allowedExtensions == null)
-				throw new InvalidPropertyException();
+				throw new InvalidPropertyException("Extensions missing from config file");
 			
 		} catch (IOException ex) {
 			ex.printStackTrace();
