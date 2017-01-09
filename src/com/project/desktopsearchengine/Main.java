@@ -10,13 +10,10 @@ import com.project.desktopsearchengine.utilities.Utilities;
 
 public class Main {
 	
-	//private final static Logger LOGGER = Logger.getLogger(Main.class.getName());
-	//public final static Logger logger = Logger.getLogger(Main.class);
-	
 	public static void main(String[] args) {
 
 		try {
-			Utilities.initializeConfigurations(".\\config\\config.properties");
+			Utilities.initializeConfigurations("."+Utilities.SEPARATOR+"config"+Utilities.SEPARATOR+"config.properties");
 		} catch (InvalidPropertyException e) {
 			e.printStackTrace();
 		}

@@ -17,6 +17,7 @@ import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
  */
 public class Utilities {
 
+	public static final String SEPARATOR = File.separator;
 	public static ArrayList<String> fileNamesSelected = new ArrayList<String>();
 	public static List<String> allowedExtensions = new ArrayList<String>();
 	public static List<String> parentFolders = new ArrayList<String>();
