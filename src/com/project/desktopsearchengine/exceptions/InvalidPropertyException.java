@@ -3,7 +3,7 @@ package com.project.desktopsearchengine.exceptions;
 public class InvalidPropertyException extends Exception{
 
 	/**
-	 * 
+	 * This class handles exceptions related to properties file
 	 */
 	private static final long serialVersionUID = 1L;
 
