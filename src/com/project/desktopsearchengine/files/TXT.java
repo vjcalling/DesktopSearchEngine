@@ -2,10 +2,9 @@ package com.project.desktopsearchengine.files;
 
 import java.util.HashMap;
 
-public class CSV implements FileHandler{
+public class TXT implements FileHandler{
 
-	public final String DELIMITER = ",";
-
+	public final String DELIMITER = " ";
 
 	public HashMap<String, Integer> readFileAndGetWords(String filePath) {
 		
