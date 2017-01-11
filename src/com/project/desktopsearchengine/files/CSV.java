@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.project.desktopsearchengine.utilities.Utilities;
+
 public class CSV implements FileHandler{
 
 	public static final String DELIMITER = ",";
@@ -21,22 +23,14 @@ public class CSV implements FileHandler{
 		BufferedReader reader = null;
 		String line;
 		int count;
+		Utilities util = new Utilities();
 
 		try {
 			fis = new FileInputStream(filePath);
 			reader = new BufferedReader(new InputStreamReader(fis));
 
 			while((line = reader.readLine()) != null){
-				String[] wordsInLine = line.split(DELIMITER);
-				for(String word : wordsInLine){
-					if(wordCount.containsKey(word)){
-						count = wordCount.get(word);
-						count++;
-						wordCount.put(word, count);
-					}else{
-						wordCount.put(word, 1);
-					}
-				}
+				util.populateWordCountHashMap(line, DELIMITER, wordCount);
 			}           
 
 		} catch (FileNotFoundException ex) {

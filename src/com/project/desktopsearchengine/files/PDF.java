@@ -13,6 +13,8 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+import com.project.desktopsearchengine.utilities.Utilities;
+
 public class PDF implements FileHandler {
 
 	private PDFParser parser;
@@ -20,6 +22,7 @@ public class PDF implements FileHandler {
 	private PDDocument pdDoc ;
 	private COSDocument cosDoc ;
 	private String Text ;
+	public static final String DELIMITER = " ";
 	private File file;
 
 	public PDF() {
@@ -27,9 +30,13 @@ public class PDF implements FileHandler {
 	}
 	public HashMap<String, Integer> readFileAndGetWords(String filePath)
 	{
+		HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
 		this.pdfStripper = null;
 		this.pdDoc = null;
 		this.cosDoc = null;
+		int i=1;
+		String lines[];
+		Utilities util = new Utilities();
 
 		file = new File(filePath);
 		try {
@@ -38,17 +45,25 @@ public class PDF implements FileHandler {
 			cosDoc = parser.getDocument();
 			pdfStripper = new PDFTextStripper();
 			pdDoc = new PDDocument(cosDoc);
-			pdDoc.getNumberOfPages();
-			pdfStripper.setStartPage(1);
-			pdfStripper.setEndPage(pdDoc.getNumberOfPages());
-			Text = pdfStripper.getText(pdDoc);
 			
+			//getting words page by page to handle OOM in case of huge PDFs
+			while(i <= (pdDoc.getNumberOfPages())){
+				pdfStripper.setStartPage(i);
+				pdfStripper.setEndPage(i);
+				Text = pdfStripper.getText(pdDoc);
+				lines = Text.split("\n");
+				
+				for(String line : lines)
+					util.populateWordCountHashMap(line, DELIMITER, wordCount);
+				i++;
+			}
+
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(PDF.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
 			Logger.getLogger(PDF.class.getName()).log(Level.SEVERE, null, ex);
 		} 
-		
-		return null;
+
+		return wordCount;
 	}
 }

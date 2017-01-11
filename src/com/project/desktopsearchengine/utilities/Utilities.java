@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -18,6 +19,7 @@ import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
 public class Utilities {
 
 	public static final String SEPARATOR = File.separator;
+	public static final String FILES_PACKAGE = "com.project.desktopsearchengine.files.";
 	public static ArrayList<String> fileNamesSelected = new ArrayList<String>();
 	public static List<String> allowedExtensions = new ArrayList<String>();
 	public static List<String> parentFolders = new ArrayList<String>();
@@ -89,5 +91,19 @@ public class Utilities {
 	
 //-------------------------------------------------------------------------------------------
 
+	public void populateWordCountHashMap(String line, String Delimiter, HashMap<String,Integer> mymap){
+		
+		int count;
+		String[] wordsInLine = line.split(Delimiter);
+		for(String word : wordsInLine){
+			if(mymap.containsKey(word)){
+				count = mymap.get(word);
+				count++;
+				mymap.put(word, count);
+			}else{
+				mymap.put(word, 1);
+			}
+		}
+	}
 	
 }
