@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.io.RandomAccessFile;
@@ -17,9 +19,7 @@ public class PDF implements FileHandler {
 	private PDFTextStripper pdfStripper;
 	private PDDocument pdDoc ;
 	private COSDocument cosDoc ;
-
 	private String Text ;
-	private String filePath;
 	private File file;
 
 	public PDF() {
@@ -43,13 +43,11 @@ public class PDF implements FileHandler {
 			pdfStripper.setEndPage(pdDoc.getNumberOfPages());
 			Text = pdfStripper.getText(pdDoc);
 			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // update for PDFBox V 2.0
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(PDF.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(PDF.class.getName()).log(Level.SEVERE, null, ex);
+		} 
 		
 		return null;
 	}
