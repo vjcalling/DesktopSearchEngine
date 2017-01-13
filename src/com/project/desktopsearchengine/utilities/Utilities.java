@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -91,11 +92,10 @@ public class Utilities {
 	
 //-------------------------------------------------------------------------------------------
 
-	public void populateWordCountHashMap(String line, String Delimiter, HashMap<String,Integer> mymap){
+	public void populateWordCountHashMap(LinkedList<String> filteredWords, HashMap<String,Integer> mymap){
 		
 		int count;
-		String[] wordsInLine = line.split(Delimiter);
-		for(String word : wordsInLine){
+		for(String word : filteredWords){
 			if(mymap.containsKey(word)){
 				count = mymap.get(word);
 				count++;
@@ -106,4 +106,6 @@ public class Utilities {
 		}
 	}
 	
+	//-------------------------------------------------------------------------------------------
+
 }

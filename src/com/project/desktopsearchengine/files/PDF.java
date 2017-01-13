@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +15,7 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+import com.project.desktopsearchengine.utilities.Filter;
 import com.project.desktopsearchengine.utilities.Utilities;
 
 public class PDF implements FileHandler {
@@ -37,6 +40,9 @@ public class PDF implements FileHandler {
 		int i=1;
 		String lines[];
 		Utilities util = new Utilities();
+		Filter filter = new Filter();
+		LinkedList<String> filteredWords = new LinkedList<String>();
+		String[] wordsInLine = null;
 
 		file = new File(filePath);
 		try {
@@ -45,16 +51,19 @@ public class PDF implements FileHandler {
 			cosDoc = parser.getDocument();
 			pdfStripper = new PDFTextStripper();
 			pdDoc = new PDDocument(cosDoc);
-			
+
 			//getting words page by page to handle OOM in case of huge PDFs
 			while(i <= (pdDoc.getNumberOfPages())){
 				pdfStripper.setStartPage(i);
 				pdfStripper.setEndPage(i);
 				Text = pdfStripper.getText(pdDoc);
 				lines = Text.split("\n");
-				
-				for(String line : lines)
-					util.populateWordCountHashMap(line, DELIMITER, wordCount);
+
+				for(String line : lines){
+					wordsInLine = line.split(DELIMITER);
+					filter.filterWords(wordsInLine,filteredWords);
+					util.populateWordCountHashMap(filteredWords, wordCount);
+				}
 				i++;
 			}
 
