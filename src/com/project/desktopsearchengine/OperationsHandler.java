@@ -1,18 +1,31 @@
 package com.project.desktopsearchengine;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
 
 import com.project.desktopsearchengine.files.FileHandler;
+import com.project.desktopsearchengine.index.FileWeightage;
+import com.project.desktopsearchengine.index.IndexHandler;
+import com.project.desktopsearchengine.index.InvertedIndex;
+import com.project.desktopsearchengine.index.NormalIndex;
 import com.project.desktopsearchengine.utilities.Utilities;
 
 public class OperationsHandler {
 
+	IndexHandler indexHandler = new IndexHandler();
+	
 	public void addFilesUnderFolderForSearching(String folderPath){
 		String extension;
+		HashMap<String, Integer> wordCount;
 		ArrayList<String> selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
 		for(String f : selectedFiles){
 			extension = FilenameUtils.getExtension(f);
@@ -21,7 +34,9 @@ public class OperationsHandler {
 			try {
 				Class clazz = Class.forName(Utilities.FILES_PACKAGE+extension);
 				FileHandler file = (FileHandler)clazz.newInstance();
-				System.out.println(file.readFileAndGetWords(f));
+				wordCount = file.readFileAndGetWords(f);
+				
+				indexHandler.updateIndices(wordCount, f);
 
 			} 
 			catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
@@ -31,9 +46,20 @@ public class OperationsHandler {
 		}
 	}
 
-	public void searchQuery(String query) {
+	public List<File> searchQuery(String query) {
 		
+
 		System.out.println("Searching: "+query);
+		query = query.toLowerCase();
 		
+		List<File> results = new ArrayList<File>();
+		
+		List<FileWeightage> files = new LinkedList<FileWeightage>();
+		files = InvertedIndex.wordToFileNumsMapping.get(query);
+		for(FileWeightage w : files){
+			System.out.println(NormalIndex.fileNumToNameMap.get(w.getFileIndex())+" "+w.getFrequency());
+		}
+		
+		return results;
 	}
 }

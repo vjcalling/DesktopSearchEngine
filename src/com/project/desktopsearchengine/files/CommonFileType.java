@@ -35,6 +35,7 @@ public HashMap<String, Integer> readFileAndGetWords(String filePath, String DELI
 				wordsInLine = line.split(DELIMITER);
 				filter.filterWords(wordsInLine,filteredWords);
 				util.populateWordCountHashMap(filteredWords, wordCount);
+				filteredWords.clear();
 			}           
 
 		} catch (FileNotFoundException ex) {
@@ -53,4 +54,5 @@ public HashMap<String, Integer> readFileAndGetWords(String filePath, String DELI
 
 			return wordCount;
 	}
+
 }

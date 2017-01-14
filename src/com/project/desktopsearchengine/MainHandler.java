@@ -3,9 +3,13 @@ package com.project.desktopsearchengine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
+import com.project.desktopsearchengine.index.InvertedIndex;
+import com.project.desktopsearchengine.index.NormalIndex;
 import com.project.desktopsearchengine.utilities.Utilities;
 
 public class MainHandler {
@@ -48,7 +52,6 @@ public class MainHandler {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("Folder selected: "+folderPath);
 				operationsHandler.addFilesUnderFolderForSearching(folderPath);
 
 				break;
@@ -64,6 +67,23 @@ public class MainHandler {
 				operationsHandler.searchQuery(query);
 				break;
 
+			case 3:
+				Iterator it = NormalIndex.fileNumToNameMap.entrySet().iterator();
+				while (it.hasNext()) {
+			        Map.Entry pair = (Map.Entry)it.next();
+			        System.out.println(pair.getKey() + " = " + pair.getValue().toString());
+			        it.remove(); // avoids a ConcurrentModificationException
+			    }
+				
+				it = InvertedIndex.wordToFileNumsMapping.entrySet().iterator();
+				while (it.hasNext()) {
+			        Map.Entry pair = (Map.Entry)it.next();
+			        System.out.println(pair.getKey() + " = " + pair.getValue().toString());
+			        it.remove(); // avoids a ConcurrentModificationException
+			    }
+				
+				break;
+				
 			default:
 				System.out.println("Invalid choice. Choose from available options");
 				break;

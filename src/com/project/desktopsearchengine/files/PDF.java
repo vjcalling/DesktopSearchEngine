@@ -64,9 +64,6 @@ public class PDF implements FileHandler {
 					
 					wordsInLine = line.split(DELIMITER);
 					filter.filterWords(wordsInLine,filteredWords);
-
-					System.out.println(filteredWords);
-					
 					util.populateWordCountHashMap(filteredWords, wordCount);
 				}
 				i++;
