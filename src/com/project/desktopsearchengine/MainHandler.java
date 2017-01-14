@@ -3,15 +3,9 @@ package com.project.desktopsearchengine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.apache.commons.io.FilenameUtils;
 
 import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
-import com.project.desktopsearchengine.files.FileHandler;
 import com.project.desktopsearchengine.utilities.Utilities;
 
 public class MainHandler {
