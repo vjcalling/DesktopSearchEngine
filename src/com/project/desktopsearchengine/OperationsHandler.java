@@ -25,8 +25,9 @@ public class OperationsHandler {
 	
 	public void addFilesUnderFolderForSearching(String folderPath){
 		String extension;
-		HashMap<String, Integer> wordCount;
-		ArrayList<String> selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
+		HashMap<String, Integer> wordCount = null;
+		ArrayList<String> selectedFiles = null;
+		selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
 		for(String f : selectedFiles){
 			extension = FilenameUtils.getExtension(f);
 			extension = extension.toUpperCase(); // No need to check for null, we are already filtering files on given extensions

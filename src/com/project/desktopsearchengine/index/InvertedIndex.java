@@ -35,7 +35,7 @@ public class InvertedIndex {
 	        	wordToFileNumsMapping.put(word, fileWeightageList);
 	        }
 	        
-	        it.remove(); // avoids a ConcurrentModificationException
+//	        it.remove(); // avoids a ConcurrentModificationException
 	    }
 	}
 }
