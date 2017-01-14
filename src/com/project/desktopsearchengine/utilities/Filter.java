@@ -10,7 +10,7 @@ public class Filter {
 
 		for(String word : words){
 			word = word.toLowerCase();
-			word = word.replaceAll("\\.|!", "");
+			word = word.replaceAll("\\.|!|'|:|;|(|)|", "");
 			if(Utilities.stopWords.contains(word))	//filtering out al stopwords
 				continue;
 			filteredWords.add(word);

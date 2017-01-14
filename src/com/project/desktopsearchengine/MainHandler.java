@@ -1,8 +1,10 @@
 package com.project.desktopsearchengine;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,52 +16,72 @@ import com.project.desktopsearchengine.utilities.Utilities;
 
 public class MainHandler {
 
-	
+
+	OperationsHandler operationsHandler = new OperationsHandler();
+
 	public void initApplication(){
-		
-		long start = System.currentTimeMillis();
-		ExecutorService executor = Executors.newFixedThreadPool(50);
-		String extension;
+
+		String folderPath = null;
+		String query = null;
+
 		try {
 			Utilities.initializeConfigurations("." + Utilities.SEPARATOR + "config" + Utilities.SEPARATOR + "config.properties");
 		} catch (InvalidPropertyException e) {
 			e.printStackTrace();
 		}
 
-		if(Utilities.parentFolders != null){
-			for(String parentFolder : Utilities.parentFolders){
 
-				ArrayList<String> selectedFiles = Utilities.getAllFilesWithExtensions(parentFolder);
-				for(String f : selectedFiles){
-					
-//					Runnable worker = new WorkerThread(f);
-//		            executor.execute(worker);
-		            
-					extension = FilenameUtils.getExtension(f);
-					extension = extension.toUpperCase(); // No need to check for null, we are already filtering files on given extensions
-
-					try {
-						Class clazz = Class.forName(Utilities.FILES_PACKAGE+extension);
-						FileHandler file = (FileHandler)clazz.newInstance();
-						System.out.println(file.readFileAndGetWords(f));
-
-					} 
-					catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-						Logger.getLogger(MainHandler.class.getName()).log(Level.SEVERE, null, ex);
-					}
-					
-				}//end of for loop
+		System.out.println("======================");
+		System.out.println("Press 1 to add a folder");
+		System.out.println("Press 2 for search");
+		System.out.println("Press 4 to exit");
+		System.out.println("======================\n\n");
 
 
-			}//end of for loop
-		}
+		int choice;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Scanner reader = new Scanner(System.in);  // Reading from System.in
+		System.out.println("Enter a number: ");
+		choice = reader.nextInt(); // Scans the next token of the input as an int.
 
-//		executor.shutdown();
-//		while (!executor.isTerminated()) {
-//        }
+		while(choice != 4){
+
+			switch (choice) {
+			case 1:
+				System.out.println("Enter folder path you want to index: ");
+				try {
+					folderPath = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Folder selected: "+folderPath);
+				operationsHandler.addFilesUnderFolderForSearching(folderPath);
+
+				break;
+
+			case 2:
+				System.out.println("Enter query string: ");
+				try {
+					query = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Query to be searched: "+query);
+				operationsHandler.searchQuery(query);
+				break;
+
+			default:
+				System.out.println("Invalid choice. Choose from available options");
+				break;
+			}
+
+
+			System.out.println("Enter a number: ");
+			choice = reader.nextInt(); // Scans the next token of the input as an int.
+
+		} //end of while
 		
-		long end = System.currentTimeMillis();
 		
-		System.out.println("Time taken: " + (end-start)/1000);
+		
 	}
 }
