@@ -41,7 +41,7 @@ public class PDF implements FileHandler {
 		String lines[];
 		Utilities util = new Utilities();
 		Filter filter = new Filter();
-		LinkedList<String> filteredWords = new LinkedList<String>();
+		LinkedList<String> filteredWords;
 		String[] wordsInLine = null;
 
 		file = new File(filePath);
@@ -54,14 +54,19 @@ public class PDF implements FileHandler {
 
 			//getting words page by page to handle OOM in case of huge PDFs
 			while(i <= (pdDoc.getNumberOfPages())){
+				filteredWords = new LinkedList<String>();
 				pdfStripper.setStartPage(i);
 				pdfStripper.setEndPage(i);
 				Text = pdfStripper.getText(pdDoc);
 				lines = Text.split("\n");
 
 				for(String line : lines){
+					
 					wordsInLine = line.split(DELIMITER);
 					filter.filterWords(wordsInLine,filteredWords);
+
+					System.out.println(filteredWords);
+					
 					util.populateWordCountHashMap(filteredWords, wordCount);
 				}
 				i++;
