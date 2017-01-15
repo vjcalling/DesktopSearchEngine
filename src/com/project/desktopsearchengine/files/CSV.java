@@ -2,7 +2,7 @@ package com.project.desktopsearchengine.files;
 
 import java.util.HashMap;
 
-public class CSV implements FileHandler{
+public class CSV extends FileHandler{
 
 	public final String DELIMITER = ",";
 

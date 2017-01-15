@@ -24,10 +24,12 @@ public class OperationsHandler {
 	
 	public void addFilesUnderFolderForSearching(String folderPath){
 		
+		
 		String extension;
 		HashMap<String, Integer> wordCount;
 		ArrayList<String> selectedFiles;
 		selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
+		FileHandler.foldersAdded.add(new File(folderPath));
 		
 		System.out.println("Selected files count: "+selectedFiles.size());
 		
@@ -50,13 +52,10 @@ public class OperationsHandler {
 	}
 
 	public List<File> searchQuery(String query) {
-		
 
-		System.out.println("Searching: "+query);
 		query = query.toLowerCase();
 		
-		List<File> results = new ArrayList<File>();
-		
+		List<File> results = new ArrayList<File>();		
 		List<FileWeightage> files = new LinkedList<FileWeightage>();
 		files = InvertedIndex.wordToFileNumsMapping.get(query);
 		

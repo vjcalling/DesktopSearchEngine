@@ -18,7 +18,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import com.project.desktopsearchengine.utilities.Filter;
 import com.project.desktopsearchengine.utilities.Utilities;
 
-public class PDF implements FileHandler {
+public class PDF extends FileHandler {
 
 	private PDFParser parser;
 	private PDFTextStripper pdfStripper;

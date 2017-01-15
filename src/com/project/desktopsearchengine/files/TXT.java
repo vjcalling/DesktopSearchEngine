@@ -2,7 +2,7 @@ package com.project.desktopsearchengine.files;
 
 import java.util.HashMap;
 
-public class TXT implements FileHandler{
+public class TXT extends FileHandler{
 
 	public final String DELIMITER = " ";
 

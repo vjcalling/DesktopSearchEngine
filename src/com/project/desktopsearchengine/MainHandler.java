@@ -3,11 +3,13 @@ package com.project.desktopsearchengine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
 import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
+import com.project.desktopsearchengine.files.FileHandler;
 import com.project.desktopsearchengine.index.InvertedIndex;
 import com.project.desktopsearchengine.index.NormalIndex;
 import com.project.desktopsearchengine.utilities.Utilities;
@@ -52,8 +54,12 @@ public class MainHandler {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
+				if(FileHandler.isFolderAlreadyAdded(folderPath)){
+					System.out.println("Folder is already added, skipping...");
+					break;
+				}
 				operationsHandler.addFilesUnderFolderForSearching(folderPath);
-
 				break;
 
 			case 2:
