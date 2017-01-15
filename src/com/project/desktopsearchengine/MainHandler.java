@@ -36,7 +36,9 @@ public class MainHandler {
 		System.out.println("======================");
 		System.out.println("Press 1 to add a folder");
 		System.out.println("Press 2 for search");
+		System.out.println("Press 3 to check files added");
 		System.out.println("Press 4 to exit");
+		System.out.println("Press 5 to check folders added");
 		System.out.println("======================\n\n");
 
 
