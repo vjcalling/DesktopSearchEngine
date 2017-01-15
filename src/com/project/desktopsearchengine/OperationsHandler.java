@@ -27,8 +27,9 @@ public class OperationsHandler {
 		
 		String extension;
 		HashMap<String, Integer> wordCount;
-		ArrayList<String> selectedFiles;
-		selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
+		ArrayList<String> selectedFiles = new ArrayList<String>();
+		
+		Utilities.getAllFilesWithExtensions(folderPath,selectedFiles);
 		FileHandler.foldersAdded.add(new File(folderPath));
 		
 		System.out.println("Selected files count: "+selectedFiles.size());

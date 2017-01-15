@@ -21,15 +21,14 @@ public class Utilities {
 
 	public static final String SEPARATOR = File.separator;
 	public static final String FILES_PACKAGE = "com.project.desktopsearchengine.files.";
-	public static ArrayList<String> fileNamesSelected = new ArrayList<String>();
 	public static List<String> allowedExtensions = new ArrayList<String>();
 	public static List<String> parentFolders = new ArrayList<String>();
 	public static HashSet <String> stopWords = new HashSet <String>();
 
 	//-------------------------------------------------------------------------------------------
-	
+
 	public static void initializeConfigurations(String configPropertiesFile) throws InvalidPropertyException{
-		
+
 		Properties prop = new Properties();
 		InputStream input = null;
 
@@ -42,10 +41,10 @@ public class Utilities {
 			Utilities.allowedExtensions = prop.getProperty("EXTENSIONS") != null ? Arrays.asList(prop.getProperty("EXTENSIONS").split(",")) : null;
 			Utilities.parentFolders = prop.getProperty("PARENT_FOLDERS") != null ? Arrays.asList(prop.getProperty("PARENT_FOLDERS").split(",")) : null;
 			Utilities.stopWords = prop.getProperty("STOPWORDS") != null ? new HashSet<String>(Arrays.asList(prop.getProperty("STOPWORDS").split(","))) : null;
-			
+
 			if(Utilities.allowedExtensions == null)
 				throw new InvalidPropertyException("Extensions missing from config file");
-			
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -57,45 +56,42 @@ public class Utilities {
 				}
 			}
 		}
-		
-	}
-	
-	//-------------------------------------------------------------------------------------------
-	
-	public static ArrayList<String> getAllFilesWithExtensions(String parentFolder){
 
-		fileNamesSelected.clear();	//clearing stale entries
-		
+	}
+
+	//-------------------------------------------------------------------------------------------
+
+	public static void getAllFilesWithExtensions(String parentFolder, ArrayList<String> selectedFiles){
+
 		File folder = new File(parentFolder);
 		File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if ( (listOfFiles[i].isFile()) && (Utilities.allowedExtensions != null && Utilities.allowedExtensions.contains(getExtension(listOfFiles[i].getName())) )) {
-				fileNamesSelected.add(listOfFiles[i].getAbsolutePath());
+				selectedFiles.add(listOfFiles[i].getAbsolutePath());
 			} else if (listOfFiles[i].isDirectory()) {
-				getAllFilesWithExtensions(listOfFiles[i].getAbsolutePath()); //calling same method recursively in case of sub directory
+				getAllFilesWithExtensions(listOfFiles[i].getAbsolutePath(),selectedFiles); //calling same method recursively in case of sub directory
 			}
 		}
-		return fileNamesSelected;
-	
+
 	}
-	
+
 	//-------------------------------------------------------------------------------------------
-	
+
 	public static String getExtension(String fileName){
-		
+
 		String extension = null;
 		int i = fileName.lastIndexOf('.');
 		if (i > 0) {
-		    extension = fileName.substring(i+1);
+			extension = fileName.substring(i+1);
 		}
 		return extension;
 	}
-	
-//-------------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------------
 
 	public void populateWordCountHashMap(LinkedList<String> filteredWords, HashMap<String,Integer> mymap){
-		
+
 		int count;
 		for(String word : filteredWords){
 			if(mymap.containsKey(word)){
@@ -107,7 +103,7 @@ public class Utilities {
 			}
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------
 
 }
