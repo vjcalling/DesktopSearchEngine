@@ -1,6 +1,8 @@
 package com.project.desktopsearchengine.index;
 
-public class FileWeightage implements Comparable<FileWeightage>{
+import java.io.Serializable;
+
+public class FileWeightage implements Comparable<FileWeightage>, Serializable{
 
 	private int fileIndex;
 	private int frequency;

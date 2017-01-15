@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
@@ -106,4 +108,12 @@ public class Utilities {
 
 	//-------------------------------------------------------------------------------------------
 
+	public static void displayMap(Map map){
+		
+		Iterator it = map.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry pair = (Map.Entry)it.next();
+	        System.out.println(pair.getKey() + " --> " + pair.getValue());
+		}
+	}
 }

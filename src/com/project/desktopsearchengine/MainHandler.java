@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,7 @@ import java.util.Scanner;
 
 import com.project.desktopsearchengine.exceptions.InvalidPropertyException;
 import com.project.desktopsearchengine.files.FileHandler;
-import com.project.desktopsearchengine.index.InvertedIndex;
+import com.project.desktopsearchengine.index.IndexHandler;
 import com.project.desktopsearchengine.index.NormalIndex;
 import com.project.desktopsearchengine.utilities.Utilities;
 
@@ -28,6 +27,7 @@ public class MainHandler {
 
 		try {
 			Utilities.initializeConfigurations("." + Utilities.SEPARATOR + "config" + Utilities.SEPARATOR + "config.properties");
+			IndexHandler.loadIndices();
 		} catch (InvalidPropertyException e) {
 			e.printStackTrace();
 		}
@@ -46,6 +46,7 @@ public class MainHandler {
 		System.out.println("Enter a number: ");
 		choice = reader.nextInt(); // Scans the next token of the input as an int.
 
+		try{
 		while(choice != 4){
 
 			switch (choice) {
@@ -90,18 +91,30 @@ public class MainHandler {
 			    }
 				
 				break;
+			
+			case 5:
+				for(File folder : FileHandler.foldersAdded){
+					System.out.println(folder.getCanonicalPath());
+				}
+				break;
 				
 			default:
 				System.out.println("Invalid choice. Choose from available options");
 				break;
 			}
 
-
 			System.out.println("Enter a number: ");
 			choice = reader.nextInt(); // Scans the next token of the input as an int.
 
 		} //end of while
 		
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+		
+			IndexHandler.persistIndices();
+		}
 		
 		
 	}
