@@ -1,6 +1,6 @@
 package com.project.desktopsearchengine.index;
 
-public class FileWeightage {
+public class FileWeightage implements Comparable<FileWeightage>{
 
 	private int fileIndex;
 	private int frequency;
@@ -24,6 +24,12 @@ public class FileWeightage {
 	}
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
+	}
+
+	@Override
+	public int compareTo(FileWeightage file) {
+		
+		return file.getFrequency() - this.getFrequency();
 	}
 	
 }

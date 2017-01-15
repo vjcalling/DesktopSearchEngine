@@ -2,6 +2,7 @@ package com.project.desktopsearchengine;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -60,10 +61,14 @@ public class OperationsHandler {
 		
 		List<FileWeightage> files = new LinkedList<FileWeightage>();
 		files = InvertedIndex.wordToFileNumsMapping.get(query);
+		
+		Collections.sort(files);	//ranking results according to their frequency
+		
 		for(FileWeightage w : files){
 			System.out.println(NormalIndex.fileNumToNameMap.get(w.getFileIndex())+" "+w.getFrequency());
 		}
 		
 		return results;
 	}
+	
 }
