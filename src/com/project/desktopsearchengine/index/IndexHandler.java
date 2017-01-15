@@ -43,7 +43,6 @@ public class IndexHandler {
 	         out.writeObject(obj);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Index persisted");
 	      }catch(IOException i) {
 	         i.printStackTrace();
 	      }

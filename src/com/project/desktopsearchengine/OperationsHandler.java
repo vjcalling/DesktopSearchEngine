@@ -66,7 +66,8 @@ public class OperationsHandler {
 			return null;	//no result found
 		
 		for(FileWeightage w : files){
-			System.out.println(NormalIndex.fileNumToNameMap.get(w.getFileIndex())+" "+w.getFrequency());
+			File f = new File(NormalIndex.fileNumToNameMap.get(w.getFileIndex()));
+			results.add(f);
 		}
 		
 		return results;
