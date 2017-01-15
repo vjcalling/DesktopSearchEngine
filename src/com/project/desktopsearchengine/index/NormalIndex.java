@@ -11,5 +11,7 @@ public class NormalIndex {
 		int currentCounter = fileNumToNameMap.size() + 1;
 		fileNumToNameMap.put(currentCounter, fileName);
 		return currentCounter;
+		
+		
 	}
 }

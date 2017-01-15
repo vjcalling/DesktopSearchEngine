@@ -24,10 +24,14 @@ public class OperationsHandler {
 	IndexHandler indexHandler = new IndexHandler();
 	
 	public void addFilesUnderFolderForSearching(String folderPath){
+		
 		String extension;
-		HashMap<String, Integer> wordCount = null;
-		ArrayList<String> selectedFiles = null;
+		HashMap<String, Integer> wordCount;
+		ArrayList<String> selectedFiles;
 		selectedFiles = Utilities.getAllFilesWithExtensions(folderPath);
+		
+		System.out.println("Selected files count: "+selectedFiles.size());
+		
 		for(String f : selectedFiles){
 			extension = FilenameUtils.getExtension(f);
 			extension = extension.toUpperCase(); // No need to check for null, we are already filtering files on given extensions
@@ -36,7 +40,6 @@ public class OperationsHandler {
 				Class clazz = Class.forName(Utilities.FILES_PACKAGE+extension);
 				FileHandler file = (FileHandler)clazz.newInstance();
 				wordCount = file.readFileAndGetWords(f);
-				
 				indexHandler.updateIndices(wordCount, f);
 
 			} 

@@ -64,6 +64,8 @@ public class Utilities {
 	
 	public static ArrayList<String> getAllFilesWithExtensions(String parentFolder){
 
+		fileNamesSelected.clear();	//clearing stale entries
+		
 		File folder = new File(parentFolder);
 		File[] listOfFiles = folder.listFiles();
 

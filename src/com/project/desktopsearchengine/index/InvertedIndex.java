@@ -22,8 +22,6 @@ public class InvertedIndex {
 	        word = (String) pair.getKey();
 	        frequency = (int) pair.getValue();
 	        
-//	        System.out.println("Word: "+word+" Frequency: "+frequency);
-	        
 	        FileWeightage weightage = new FileWeightage(fileIndex, frequency);
 	        
 	        if(wordToFileNumsMapping.containsKey(word)){
@@ -33,9 +31,8 @@ public class InvertedIndex {
 	        	fileWeightageList = new LinkedList<FileWeightage>();
 	        	fileWeightageList.add(weightage);
 	        	wordToFileNumsMapping.put(word, fileWeightageList);
-	        }
-	        
-//	        it.remove(); // avoids a ConcurrentModificationException
+	        }    
 	    }
+	    
 	}
 }
