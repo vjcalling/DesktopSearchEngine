@@ -47,6 +47,8 @@ public class MainHandler {
 		while(choice != 4){
 
 			switch (choice) {
+			
+			//logic for adding files under folder
 			case 1:
 				System.out.println("Enter folder path you want to index: ");
 				try {
@@ -62,6 +64,8 @@ public class MainHandler {
 				operationsHandler.addFilesUnderFolderForSearching(folderPath);
 				break;
 
+				
+			//logic for searching
 			case 2:
 				System.out.println("Enter query string: ");
 				try {
@@ -73,20 +77,13 @@ public class MainHandler {
 				operationsHandler.searchQuery(query);
 				break;
 
+			//logic for printing normal index
 			case 3:
 				Iterator it = NormalIndex.fileNumToNameMap.entrySet().iterator();
 				while (it.hasNext()) {
 			        Map.Entry pair = (Map.Entry)it.next();
 			        System.out.println(pair.getKey() + " = " + pair.getValue().toString());
-			        //it.remove(); // avoids a ConcurrentModificationException
 			    }
-				
-//				it = InvertedIndex.wordToFileNumsMapping.entrySet().iterator();
-//				while (it.hasNext()) {
-//			        Map.Entry pair = (Map.Entry)it.next();
-//			        System.out.println(pair.getKey() + " = " + pair.getValue().toString());
-//			        it.remove(); // avoids a ConcurrentModificationException
-//			    }
 				
 				break;
 				
