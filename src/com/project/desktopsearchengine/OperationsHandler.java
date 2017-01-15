@@ -60,7 +60,10 @@ public class OperationsHandler {
 		List<FileWeightage> files = new LinkedList<FileWeightage>();
 		files = InvertedIndex.wordToFileNumsMapping.get(query);
 		
-		Collections.sort(files);	//ranking results according to their frequency
+		if(files != null)
+			Collections.sort(files);	//ranking results according to their frequency
+		else
+			return null;	//no result found
 		
 		for(FileWeightage w : files){
 			System.out.println(NormalIndex.fileNumToNameMap.get(w.getFileIndex())+" "+w.getFrequency());

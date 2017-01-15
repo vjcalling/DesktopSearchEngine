@@ -1,10 +1,12 @@
 package com.project.desktopsearchengine;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -74,7 +76,9 @@ public class MainHandler {
 					e.printStackTrace();
 				}
 				System.out.println("Query to be searched: "+query);
-				operationsHandler.searchQuery(query);
+				List<File> results = operationsHandler.searchQuery(query);
+				if(results == null)
+					System.out.println("No records found");
 				break;
 
 			//logic for printing normal index
