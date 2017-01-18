@@ -21,19 +21,19 @@ import com.project.desktopsearchengine.utilities.Utilities;
 public class OperationsHandler {
 
 	IndexHandler indexHandler = new IndexHandler();
-	
+
 	public void addFilesUnderFolderForSearching(String folderPath){
-		
-		
+
+
 		String extension;
 		HashMap<String, Integer> wordCount;
 		ArrayList<String> selectedFiles = new ArrayList<String>();
-		
+
 		Utilities.getAllFilesWithExtensions(folderPath,selectedFiles);
 		FileHandler.foldersAdded.add(new File(folderPath));
-		
+
 		System.out.println("Selected files count: "+selectedFiles.size());
-		
+
 		for(String f : selectedFiles){
 			extension = FilenameUtils.getExtension(f);
 			extension = extension.toUpperCase(); // No need to check for null, we are already filtering files on given extensions
@@ -55,22 +55,43 @@ public class OperationsHandler {
 	public List<File> searchQuery(String query) {
 
 		query = query.toLowerCase();
-		
+
 		List<File> results = new ArrayList<File>();		
 		List<FileWeightage> files = new LinkedList<FileWeightage>();
 		files = InvertedIndex.wordToFileNumsMapping.get(query);
-		
+
 		if(files != null)
 			Collections.sort(files);	//ranking results according to their frequency
 		else
 			return null;	//no result found
-		
+
 		for(FileWeightage w : files){
 			File f = new File(NormalIndex.fileNumToNameMap.get(w.getFileIndex()));
 			results.add(f);
 		}
-		
+
 		return results;
 	}
-	
+
+	public List<File> searchConditionalQuery(String query){
+		
+		query = query.toLowerCase();
+		String[] queryWords = query.split(" ");
+
+		List<File> results = new ArrayList<File>();		
+		List<FileWeightage> files = new LinkedList<FileWeightage>();
+		files = InvertedIndex.wordToFileNumsMapping.get(query);
+
+		if(files != null)
+			Collections.sort(files);	//ranking results according to their frequency
+		else
+			return null;	//no result found
+
+		for(FileWeightage w : files){
+			File f = new File(NormalIndex.fileNumToNameMap.get(w.getFileIndex()));
+			results.add(f);
+		}
+		return results;
+	}
+
 }
