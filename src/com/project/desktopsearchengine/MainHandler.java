@@ -89,6 +89,7 @@ public class MainHandler {
 						System.out.println("No records found");
 					else{
 						System.out.println("Result:");
+						System.out.println("------");
 						for(File f : results)
 							System.out.println(f.getCanonicalPath());
 					}
